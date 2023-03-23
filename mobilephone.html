@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class Mobile{
+        battery = 100;
+        textMessenger='';
+        inbox=[];
+        sentMessenger=[];
+        on=false;
+        constructor() {
+
+        }
+        checkOnOff(){
+            if (this.on){
+                alert('mobile turned on')
+            }else
+                alert('mobile turned off')
+
+        }
+        turnOn(){
+            this.on = true;
+            return this.on
+        }
+        turnOff(){
+            this.on=false
+           return this.on
+        }
+        changeBattery(){
+            if (this.on){
+                if (this.battery<100 && this.battery >0){
+                    this.battery +=1
+                    alert(`this battery is ${this.battery}%`)
+                }else return  this.battery=100
+            }
+        }
+        DraftMessenger(text){
+            if (this.on){
+                this.textMessenger = text
+                this.battery--
+            }
+        }
+        receiveMessenger(text){
+            if (this.on){
+                this.inbox.push(text)
+                this.battery--
+            }
+        }
+        sendMessenger(text,recipientMessenger){
+
+            if (this.on && recipientMessenger.checkOnOff()){
+                this.sentMessenger.push(text)
+                recipientMessenger.receiveMessenger()
+                this.battery--
+            }
+        }
+        inbox(){
+            if (this.on){
+                return this.inbox
+                this.battery--
+            }
+        }
+        readSentMessenger(){
+            if (this.on){
+                return this.sentMessenger
+                this.battery--
+            }
+        }
+
+    }
+</script>
+</body>
+</html>
