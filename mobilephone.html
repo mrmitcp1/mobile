@@ -6,72 +6,97 @@
 </head>
 <body>
 <script>
-    class Mobile{
+    class Mobile {
+        id
+        name
         battery = 100;
-        textMessenger='';
-        inbox=[];
-        sentMessenger=[];
-        on=false;
-        constructor() {
+        textMessenger = '';
+        inbox = [];
+        sentMessenger = [];
+        on = false;
+
+        constructor(id, name) {
+            this.id = id
+            this.name = name
+        }
+
+        checkOnOff() {
+            if (this.on) {
+                return false
+            } else
+                return true
 
         }
-        checkOnOff(){
-            if (this.on){
-                alert('mobile turned on')
-            }else
-                alert('mobile turned off')
+
+        turnOn() {
+            return this.on = true;
 
         }
-        turnOn(){
-            this.on = true;
+
+        turnOff() {
+            this.on = false
             return this.on
         }
-        turnOff(){
-            this.on=false
-           return this.on
-        }
-        changeBattery(){
-            if (this.on){
-                if (this.battery<100 && this.battery >0){
-                    this.battery +=1
+
+        changeBattery() {
+            if (this.on) {
+                if (this.battery < 100 && this.battery > 0) {
+                    this.battery += 1
                     alert(`this battery is ${this.battery}%`)
-                }else return  this.battery=100
+                } else return this.battery = 100
             }
         }
-        DraftMessenger(text){
-            if (this.on){
+
+        DraftMessenger(text) {
+            if (this.on) {
                 this.textMessenger = text
                 this.battery--
             }
         }
-        receiveMessenger(text){
-            if (this.on){
+
+        receiveMessenger(text) {
+            if (this.checkOnOff()) {
+                this.on = true
                 this.inbox.push(text)
                 this.battery--
             }
         }
-        sendMessenger(text,recipientMessenger){
 
-            if (this.on && recipientMessenger.checkOnOff()){
+        sendMessenger(text, recipientMessenger) {
+            if (this.checkOnOff()) {
+                this.on = true
                 this.sentMessenger.push(text)
-                recipientMessenger.receiveMessenger()
+                recipientMessenger.receiveMessenger(text)
                 this.battery--
             }
+
+            // if (this.on && recipientMessenger.checkOnOff()){
+            //     this.sentMessenger.push(text)
+            //     recipientMessenger.receiveMessenger()
+            //     this.battery--
+            // }
         }
-        inbox(){
-            if (this.on){
-                return this.inbox
+
+        checInbox() {
+            this.battery--
+            return this.inbox
+        }
+
+        readSentMessenger() {
+            if (this.on) {
                 this.battery--
-            }
-        }
-        readSentMessenger(){
-            if (this.on){
                 return this.sentMessenger
-                this.battery--
+
             }
         }
 
     }
+
+    let nokia = new Mobile(1, 'nokia')
+    let iphone = new Mobile(2, 'iphone')
+    iphone.sendMessenger('hello', nokia)
+    let checkmessenger = nokia.checInbox()
+    console.log(checkmessenger)
 </script>
 </body>
 </html>
